@@ -1,7 +1,7 @@
 -- Add ZDoom GAMEINFO lump with the currently selected IWAD and a list of all
 -- other currently open archives.
 
-function Execute(archive)
+return function(archive)
 	local iwad = Archives.BaseResource().filename:match("([^/\\]*)$")
 	local gameinfo = 'IWAD="' .. iwad .. '"'
 	local firstPwad = true

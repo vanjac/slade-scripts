@@ -1,7 +1,7 @@
 -- With multiple sectors selected, interpolate properties between the first
 -- sector and last sector, in order. Use to create stairs, light gradients, etc.
 
-function Execute(map)
+return function(map)
 	local sel = App.MapEditor():SelectedSectors()
 	local len = #sel
 	if len < 2 then
@@ -38,7 +38,8 @@ function Execute(map)
 		local aFactor = (len - s) / (len - 1)
 		local bFactor = (s - 1) / (len - 1)
 		for p, prop in ipairs(properties) do
-			sector:SetIntProperty(prop, aVals[p] * aFactor + bVals[p] * bFactor)
+			local val = math.floor(aVals[p] * aFactor + bVals[p] * bFactor)
+			sector:SetIntProperty(prop, val)
 		end
 	end
 end
