@@ -6,13 +6,16 @@ return function(archive)
 	local gameinfo = 'IWAD="' .. iwad .. '"'
 	local firstPwad = true
 	for _, other in ipairs(Archives.All()) do
-		if other ~= archive then
+		if other.filename ~= archive.filename then
 			gameinfo = gameinfo .. (firstPwad and '\nLOAD="' or ',"')
 			gameinfo = gameinfo .. other.filename .. '"'
 			firstPwad = false
 		end
 	end
-	
-	local entry = archive:CreateEntry("GAMEINFO", 0)
+
+	local entry = archive:EntryAtPath("GAMEINFO")
+	if not entry then
+		entry = archive:CreateEntry("GAMEINFO", 0)
+	end
 	entry:ImportData(gameinfo)
 end
